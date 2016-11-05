@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<title>Yacaré</title>
+	<script type="text/javascript">
+		var id_entrada_sel=null;
+		var tipo_entrada_sel=null;
+		var controles_entrada=null;
+		function ajax(url, obtener_respuesta, cb) {
+			var req=new XMLHttpRequest();
+			req.open("GET", url, true);
+			if(obtener_respuesta){
+				req.onreadystatechange=function () {
+					if(req.readyState==4 && req.status==200){
+						cb(req.response);
+					}
+				}
+			}
+			req.send();
+		}
+		function ocultar_controles_entrada() {
+			if(id_entrada_sel==null){
+				return;
+			}
+			controles_entrada=document.getElementById("controles_entrada_"+id_entrada_sel);
+			controles_entrada.innerHTML="";
+			controles_entrada.style.display="none";
+		}
+		function mostrar_controles_entrada(id,tipo) {
+			ocultar_controles_entrada();
+			id_entrada_sel=id;
+			tipo_entrada_sel=tipo;
+			controles_entrada=document.getElementById("controles_entrada_"+id);
+			controles_entrada.innerHTML=document.getElementById('controles_entrada').innerHTML;
+			controles_entrada.style.display="block";
+		}
+		function reproducir() {
+			if(id_entrada_sel==null) return;
+			ocultar_controles_entrada();
+			ajax("/reproducir/"+tipo_entrada_sel+"/"+id_entrada_sel);
+		}
+		function agregar_a_lista() {
+			if(id_entrada_sel==null) return;
+			ocultar_controles_entrada();
+			ajax("/lista_agregar/"+tipo_entrada_sel+"/"+id_entrada_sel);
+		}
+	</script>
+</head>
+
+<body>
+	<header>Yacaré</header>
+	<nav>
+		<a href="/">principal</a>
+		<a href="/listar_dir">sistema de archivos</a>
+		<a href="/yt">youtube</a>
+		<a href="/lista_reproduccion">lista de reproducción</a>
+	</nav>
+	<div>
+		reproducción
+		<input type="button" value="detener" onclick="ajax('/cmd/detener')" />
+		<input type="button" value="pausar" onclick="ajax('/cmd/pausar')" />
+		<input type="button" value="siguiente" onclick="ajax('/cmd/siguiente')" />
+		<input type="button" value="salir" onclick="ajax('/cmd/salir')" />
+	</div>
+	<main>
+		{% block herramienta %}
+		{% endblock %}
+	</main>
+	<footer></footer>
+</body>
+
+</html>

@@ -1,0 +1,26 @@
+{% extends "index.html" %}
+{% import "entrada.html" as entr %}
+{% block herramienta %}
+<div>
+
+	<p>contenido del directorio {{ ruta_dir }}</p>
+
+	{% if id_entrada_padre!='' %}
+	<a href="/listar_dir/{{ id_entrada_padre }}">volver directorio anterior</a>
+	{% endif %}
+
+	{{ entr.controles() }}
+	<ul>
+	{% for entrada in lista %}
+		{% if entrada['tipo']=='d' %}
+		<li>
+			<a href="/listar_dir/{{ entrada['id'] }}">{{ entrada['etiqueta'] }}</a>
+		</li>
+		{% else %}
+		{{ entr.item(entrada['etiqueta'], entrada['tipo'], entrada['id']) }}
+		{% endif %}
+	{% endfor %}
+	</ul>
+
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "index.html" %}
+{% import "entrada.html" as entr %}
+{% block herramienta %}
+<div>
+	<p>lista de reproducción</p>
+	
+	{{ entr.controles() }}
+	<ul>
+	{% for entrada in lista %}
+	{{ entr.item(entrada['etiqueta'], entrada['tipo'], entrada['id']) }}
+	{% endfor %}
+	</ul>
+
+</div>
+{% endblock %}

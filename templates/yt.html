@@ -1,0 +1,30 @@
+{% extends "index.html" %}
+{% import "entrada.html" as entr %}
+{% block herramienta %}
+<div>
+
+	<script type="text/javascript" >
+	function yt_buscar() {
+		var tb=document.getElementById('yt_texto_busqueda');
+		if(tb.value=='') return;
+		window.location.assign('/yt?c='+encodeURI(tb.value));
+	}
+	
+	</script>
+
+	<p>youtube</p>
+
+	<div>
+		<input type="text" placeholder="búsqueda..." id="yt_texto_busqueda" />
+		<input type="button" value="buscar" onclick="yt_buscar()" />
+	</div>
+	
+	<ul id="items">
+		{{ entr.controles() }}
+		{% for entrada in entradas: %}
+		{{ entr.item(entrada['etiqueta'], entrada['tipo'], entrada['id']) }}
+		{% endfor %}
+	</ul>
+
+</div>
+{% endblock %}

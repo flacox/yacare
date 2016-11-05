@@ -1,0 +1,13 @@
+{% macro item(etiqueta, tipo, id_entrada) %}
+<li tipo="{{ tipo }}">
+	{{ etiqueta }}
+	<input type="button" value="+" onclick="mostrar_controles_entrada('{{ id_entrada }}','{{ tipo }}');" />
+	<div id="controles_entrada_{{ id_entrada }}"></div>
+</li>
+{% endmacro %}
+{% macro controles() %}
+<div id="controles_entrada" style="display:none">
+	<input type="button" value="reproducir" onclick="reproducir()" />
+	<input type="button" value="agregar a lista" onclick="agregar_a_lista()" />
+</div>
+{% endmacro %}
